@@ -3,14 +3,10 @@
 # https://github.com/github/super-linter
 name: Lint Code Base, Docker Build and Push to Docker Hub
 
-on:
-  push:
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "main"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
+on: push      
 
-  docker-build-and-push:
+jobs:
+  docker:
     runs-on: ubuntu-latest
     needs: run-lint
     steps:
@@ -30,5 +26,6 @@ on:
         name: Build and push
         uses: docker/build-push-action@v4
         with:
+	  context: .
           push: true
-          tags: vitruvianarendt/kiii-hw5:latest
+          tags: vitruvianarendt/kiii-github-actions:latest
